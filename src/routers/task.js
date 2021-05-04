@@ -6,11 +6,12 @@ const auth = require('../middleware/auth');
 const router = new express.Router()
 
 router.post('/tasks', auth, async (req, res) => { 
-    const task = new Task({
-        ...req.body,
-        author: req.user._id,
-    })
     try {
+        const task = new Task({
+            ...req.body,
+            author: req.user._id,
+        })
+
         await task.save();
         res.status(201).send(task);
     }
@@ -104,7 +105,7 @@ router.patch('/tasks/:id', auth, async (req, res) => {
         res.send(task);
     }
     catch(error) {
-       res.status(400).send(error);
+       res.status(400).send();
     }
 })
 
